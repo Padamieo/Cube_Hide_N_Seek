@@ -1,69 +1,62 @@
-var stats, scene, renderer;
-var camera, cameraControl;
 
+/* three setup */
+var width = window.innerWidth;
+var height = window.innerHeight;
 
-if( !init() )	animate();
+var renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setClearColor( 0xaaccff, 1 ); //
+renderer.setSize(width, height);
+document.body.appendChild(renderer.domElement);
 
-function init(){
-	/* three setup */
-	var width = window.innerWidth;
-	var height = window.innerHeight;
-	var renderer = new THREE.WebGLRenderer({ antialias: true });
-	renderer.setClearColor( 0xaaccff, 1 ); //
-	renderer.setSize(width, height);
-	document.body.appendChild(renderer.domElement);
+var scene = new THREE.Scene;
 
-	
-	var scene = new THREE.Scene;
-	
-	// put a camera in the scene
-	var camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 2000);
-	
-	camera.position.set(0, 0, 20);
-	//camera.position.y = 100; //160;
-	//camera.position.z = 500; // do not set later when free move
-	
-	camera.lookAt(new THREE.Vector3(0,0,0)); //this needs to lock onto the cube no coordinates
-	
-	scene.add(camera);
-	
-	/* skybox setup */
-	var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
-	var skyboxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
-	var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
+var cubes;
 
-	scene.add(skybox);
+/* Camera Setup */
+var camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 2000);
+camera.position.y = 1; //160;
+camera.position.z = 4.22; // do not set later when free move
+//camera.lookAt(new THREE.Vector3(0,0,0));
+
+camera.updateMatrix(); // make sure camera's local matrix is updated
+camera.updateMatrixWorld(); // make sure camera's world matrix is updated
+camera.matrixWorldInverse.getInverse( camera.matrixWorld );
+
+scene.add(camera);
+
+/* define a cube */
+var cubeGeometry = new THREE.CubeGeometry(1, 1, 1);
+
+	/* build add cubes */
+	var cubeMaterial = new THREE.MeshLambertMaterial({ color: 0xDDDDDD });
+	//cubeMaterial.color.setRGB (1, 1, 1);
+	cubes = new THREE.Mesh(cubeGeometry, cubeMaterial);
+	cubes.position.z = 0;
+	cubes.position.x = 0;
+	scene.add(cubes);
 	
-	// here you add your objects
-	// - you will most likely replace this part by your own
-	var player new THREE.CubeGeometry( 1, 1, 1 );
-	var material	= new THREE.MeshNormalMaterial();
-	var mesh	= new THREE.Mesh( player, material );
-	scene.add( mesh );
-	
-	var level = new THREE.PlaneGeometry( 10, 10 );
+	var level = new THREE.PlaneGeometry( 5, 5 );
 	var material = new THREE.MeshBasicMaterial( {color: 0xfffff0, side: THREE.DoubleSide} );
 	var plane = new THREE.Mesh( level, material );
-	scene.add( plane );
-}
+	scene.add( plane )
 
+/* skybox setup */
+var skyboxGeometry = new THREE.CubeGeometry(10000, 10000, 10000);
+var skyboxMaterial = new THREE.MeshBasicMaterial({ color: 0x000000, side: THREE.BackSide });
+var skybox = new THREE.Mesh(skyboxGeometry, skyboxMaterial);
 
-function animate(){
-	
-	requestAnimationFrame( animate );
-	
-	render();
-	
-	// update stats
-	stats.update();
-}
+scene.add(skybox);
+
+/* Light setup */
+var pointLight = new THREE.PointLight(0xffffff);
+pointLight.position.set(0, 300, 200);
+scene.add(pointLight);
 
 /* animation loop */
 function render() {
 
 	requestAnimationFrame(render);
 	
-	
 	renderer.render(scene, camera);
 }
-
+render();
