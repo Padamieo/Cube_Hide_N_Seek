@@ -3,13 +3,17 @@ var camera;
 var renderer;
 var stats;
 
+
+
 if( !init() )	animate();
 
 function init(){
 	/* three setup */
 	scene = new THREE.Scene;
-	width = window.innerWidth;
-	height = window.innerHeight;
+	
+	width = 1280;
+	height = 720;
+	
 	renderer = new THREE.WebGLRenderer({ antialias: true });
 	renderer.setClearColor( 0xaaccff, 1 ); //
 	renderer.setSize(width, height);
@@ -53,11 +57,33 @@ function init(){
 	pointLight = new THREE.PointLight(0xffffff);
 	pointLight.position.set(0, 300, 200);
 	scene.add(pointLight);
+	
+
+	// allow 'f' to go fullscreen where this feature is supported
+	if( THREEx.FullScreen.available() ){
+		THREEx.FullScreen.bindKey();
+		//document.getElementById('inlineDoc').innerHTML	+= "- <i>f</i> for fullscreen";
+	}
+			
+}
+
+function rebuild_size(){
+	if(THREEx.FullScreen.activated() ){
+		width = window.innerWidth;
+		height = window.innerHeight;
+	}else{
+		width = 1280;
+		height = 720;
+	}
+	renderer.setSize(width, height);
+	//document.body.appendChild(renderer.domElement);
 }
 
 // animation loop
 function animate() {
-
+	
+	rebuild_size();
+	
 	// loop on request animation loop
 	// - it has to be at the begining of the function
 	// - see details at http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
