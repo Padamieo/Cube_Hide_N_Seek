@@ -1,3 +1,6 @@
 .idea/
 .idea/*
 *.iml
+nw-build/
+client/jsengine/nw-build
+server/jsengine/nw-build
