@@ -185,15 +185,11 @@ Renderer3D.prototype.render = function(verts, dataper) {
 
 
 	var model = new Mat4().setIdentity();
-//	alert(model);
-//	alert(model.mat);
 	var view = new Mat4(1,0,0,-0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
 
 	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'model'), false, model.flatten());
 	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'proj'), false, perspective.flatten());
 	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'view'), false, view.flatten());
-
-//	console.log(gl.uniformMatrix4fv);
 
     var posAttrib = gl.getAttribLocation(shaderProgram, 'pos');
     gl.enableVertexAttribArray(posAttrib);
