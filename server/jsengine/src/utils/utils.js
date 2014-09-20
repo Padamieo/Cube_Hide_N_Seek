@@ -1,3 +1,109 @@
+var Mat4 = function() {
+    if (arguments.length === 0) {
+        this.mat = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [0, 0, 0, 0]
+        ];
+
+    } else if (arguments.length === 16) {
+        this.mat = [
+            [arguments[0], arguments[1], arguments[2], arguments[3]],
+            [arguments[4], arguments[5], arguments[6], arguments[7]],
+            [arguments[8], arguments[9], arguments[10], arguments[11]],
+            [arguments[12], arguments[13], arguments[14], arguments[15]]
+        ];
+    } else {
+        throw ("Mat4 Only Accepts Argument Lengths of <16> and <0>");
+    }
+    this.setIdentity = function () {
+        this.mat = new Mat4().mat;
+        this.mat[0][0] = 1;
+        this.mat[1][1] = 1;
+        this.mat[2][2] = 1;
+        this.mat[3][3] = 1;
+        return this;
+    };
+    this.getIdentity = function () {
+        return new Mat4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+    };
+    this.add = function (right) {
+        var toReturn = new Mat4().mat;
+        for (var i = 0; i < 4; i++) {
+            for (var k = 0; k < 4; k++) {
+                toReturn.mat[i][k] = this.mat[i][k] + right.mat[i][k];
+            }
+        }
+        return toReturn;
+    };
+    this.sub = function (right) {
+        var toReturn = new Mat4();
+        for (var i = 0; i < 4; i++) {
+            for (var k = 0; k < 4; k++) {
+                toReturn.mat[i][k] = this.mat[i][k] - right.mat[i][k];
+            }
+        }
+        return toReturn;
+    };
+    this.mul = function (right) {
+        var toReturn = new Mat4();
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < 4; j++) {
+                var sum = 0;
+                for (var k = 0; k < 4; k++) {
+                    sum += this.mat[i][k] * right.mat[k][j];
+                }
+                toReturn.mat[i][j] = sum;
+            }
+        }
+        return toReturn;
+    };
+    this.getPerspective = function (fov, aspect, zNear, zFar) {
+        var yMax = zNear * Math.tan(fov * Math.PI / 360);
+        var yMin = -yMax;
+        var xMin = yMin * aspect;
+        var xMax = yMax * aspect;
+        return this.getFrustrum(xMin, xMax, yMin, yMax, zNear, zFar);
+    };
+    this.getFrustrum = function (left, right, bottom, top, zNear, zFar) {
+        var X = 2 * zNear / (right - left);
+        var Y = 2 * zNear / (top - bottom);
+        var A = (right + left) / (right - left);
+        var B = (top + bottom) / (top - bottom);
+        var C = -(zFar + zNear) / (zFar - zNear);
+        var D = -2 * zFar * zNear / (zFar - zNear);
+
+        return new Mat4(X, 0, A, 0, 0, Y, B, 0, 0, 0, C, D, 0, 0, -1, 0);
+    };
+    this.flatten = function () {
+        var toReturn = [];
+        for (var j = 0; j < 4; j++) {
+            for (var i = 0; i < 4; i++) {
+                toReturn.push(this.mat[i][j]);
+            }
+        }
+        return toReturn;
+    };
+    this.tostr = function () {
+        var toReturn = "";
+        for (var i = 0; i < 4; i++) {
+            toReturn += "<p>";
+            for (var k = 0; k < 4; k++) {
+                toReturn += this.mat[i][k].toFixed(3).toString() + " | ";
+            }
+            toReturn += "</p>";
+        }
+        return toReturn;
+    };
+}
+
+
+
+
+
+
+
 var Mat3 = function(x, y, value) {
 	this.val = value ? value :  [
 								 1, 0, 0,
@@ -10,7 +116,6 @@ Mat3.prototype.translate = function(x, y) {
 	this.val[6] += x;
 	this.val[7] += y;
 };
-
 var Vec2 = function(x, y) {
     this.x = x;
     this.y = y;

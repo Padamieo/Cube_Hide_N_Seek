@@ -1,7 +1,7 @@
 var EntityManager = function(renderer) {
-	this.player = new Player(-0.75, -0.05, 0.1, 0.1, this);
+//	this.player = new Player(-0.75, -0.05, 0.1, 0.1, this);
 	this.ents = [];
-	this.ents.push(this.player);
+//	this.ents.push(this.player);
 	this.renderer = renderer;
 	this.removeList = [];
 	this.addList = [];
@@ -55,12 +55,12 @@ var EntityManager = function(renderer) {
 
 	this.render = function() {
 		var renderer = this.renderer;
-		this.verts = new Float32Array(this.ents.length * 48);
+		this.verts = new Float32Array(this.ents.length * (36 * 8)); //48 for 2D (6 * 8)
         var off = 0;
         for (var i = 0; i < this.ents.length; i++) {
             var newVerts = this.ents[i].getVerts();
             this.verts.set(newVerts, off);
-            off += 48;
+            off += (36 * 8); //48 for 2D (6 * 8)
         }
         this.renderer.renderEnts(this.verts, 8);
 	};
