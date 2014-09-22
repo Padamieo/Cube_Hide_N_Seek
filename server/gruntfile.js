@@ -60,7 +60,8 @@ module.exports = function(grunt){
     },
     open: {
       all: {
-        path: 'http://<%= connect.run.options.hostname%>:<%= connect.run.options.port%>'
+        path: 'http://<%= connect.run.options.hostname%>:<%= connect.run.options.port%>',
+		app: 'Chrome'
       }
     },
 	watch: {
