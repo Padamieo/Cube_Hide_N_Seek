@@ -183,19 +183,20 @@ Renderer3D.prototype.render = function(verts, dataper) {
 	perspective = perspective.getPerspective(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
 	//perspective.mat[3][3] = 1;
 	perspective.multiply(new Mat4([
-									[1, 0, 0, 0], 
+									[1, 0, 0, -0.025], 
 									[0, 1, 0, 0], 
-									[0, 0, 1, -5], 
+									[0, -0.25, 1, -5], 
 									[0, 0, 0, 1]
 									]));
 
 
-	var model = new Mat4().setIdentity();
-	var view = new Mat4(1,0,0,-0.5, 0,1,0,0.5, 0,0,1,1, 0,0,0,1);
+	var model = new Mat4();
+	model.setIdentity();
+	var view = new Mat4([[1,0,0,-0.5], [0,1,0,0.5], [0,0,1,1], [0,0,0,1]]);
  
-	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'model'), false, model.flatten());
-	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'proj'), false, perspective.flatten());
-	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'view'), false, view.flatten());
+	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'model'), false, model.getFlattened());
+	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'proj'), false, perspective.getFlattened());
+	gl.uniformMatrix4fv(gl.getUniformLocation(shaderProgram, 'view'), false, view.getFlattened());
 
     var posAttrib = gl.getAttribLocation(shaderProgram, 'pos');
     gl.enableVertexAttribArray(posAttrib);
@@ -221,7 +222,6 @@ Renderer3D.prototype.renderEnts = function(verts, dataper) {
 	gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, entSpriteMapTex);
     gl.uniform1i(gl.getUniformLocation(shaderProgram, 'tex'), 0);
-
     this.render(verts, dataper);
 };
 

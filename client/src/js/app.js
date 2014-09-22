@@ -12,6 +12,8 @@ var pauseCoolTime = 0;
 var ENT_TEX_SIZE = 1 / 17;
 var LVL_TEX_SIZE = 1 / 8;
 
+var i = 0;
+
 $(function() {
     begin();
 	window.requestAnimationFrame(run);
@@ -89,6 +91,12 @@ function game() {
 //	lvlManager.update(delta);
     entityManager.update(delta);
     draw();
+	if (i >= 60) {
+	}
+	else {
+		i++;
+	}
+	
 };
 
 function paused() {

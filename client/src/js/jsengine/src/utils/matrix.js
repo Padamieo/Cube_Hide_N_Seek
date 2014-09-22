@@ -46,6 +46,8 @@ var Mat4 = function(value) {
         this.mat = newMat.mat;
     };
     this.multiply = function(right) {
+		alert(this);
+		console.log(this);
         var newMat = new Mat4();
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
@@ -72,7 +74,7 @@ var Mat4 = function(value) {
         var B = (top + bottom) / (top - bottom);
         var C = -(zFar + zNear) / (zFar - zNear);
         var D = -2 * zFar * zNear / (zFar - zNear);
-        return new Mat4(X, 0, A, 0, 0, Y, B, 0, 0, 0, C, D, 0, 0, -1, 0);
+        return new Mat4([[X, 0, A, 0], [0, Y, B, 0], [0, 0, C, D], [0, 0, -1, 0]]);
     };
     this.getFlattened = function() {
         var flattened = [];
