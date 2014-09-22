@@ -1,0 +1,7 @@
+.idea/
+.idea/*
+*.iml
+*npm-debug.log
+nw-build/
+client/jsengine/nw-build
+server/jsengine/nw-build
