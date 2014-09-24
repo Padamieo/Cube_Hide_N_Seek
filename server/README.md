@@ -1,5 +1,8 @@
-Cube_Hide_N_Seek - client
+Cube_Hide_N_Seek - server
 ================
+
+http://ezelia.com/2014/tutorial-creating-basic-multiplayer-game-phaser-eureca-io
+http://socket.io/
 
 This is the main client builder with npm install, it will build the required node packages and dependencies.
 
