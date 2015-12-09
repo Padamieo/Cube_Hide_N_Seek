@@ -1,7 +1,7 @@
 module.exports = function(grunt){
-	
+
     var pkg = grunt.file.readJSON('package.json');
-	
+
 	grunt.initConfig({
 	pkg: grunt.file.readJSON('package.json'),
 	uglify: {
@@ -77,7 +77,7 @@ module.exports = function(grunt){
 		}
 	}
 	});
-  
+
 	// Load the grunt tasks
 	//grunt.loadNpmTasks('grunt-browserify'); // not using this
 	grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -86,9 +86,10 @@ module.exports = function(grunt){
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-open');
-	
+
 	// our default task, others will come later
 	grunt.registerTask('default', ['uglify', 'copy', 'open', 'connect:run']);
+	grunt.registerTask('build', ['uglify', 'concat', 'copy']);
 	grunt.registerTask('dev', ['concat', 'copy', 'open', 'connect:dev', 'watch']);
-  
+
 };
