@@ -1,4 +1,12 @@
-Cube_Hide_N_Seek
+Cube_Hide_N_Seek - server
 ================
 
-basic webgl three.js game of hide and seek with crates
+https://github.com/PiusNyakoojo/multiplayer_template -- goog example
+http://blog.csainty.com/2012/01/running-nodejs-server-alongside-your.html - for when we close
+http://socket.io/
+
+This is the main client builder with npm install, it will build the required node packages and dependencies.
+
+grunt build
+With ' grunt '  - It will run a standard instance of our game.
+With ' grunt dev ' - It will build a development version of the game with livereload on changes to src (source) folder.

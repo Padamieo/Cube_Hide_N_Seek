@@ -1,11 +1,16 @@
 {
-	"name": "cube-hide-n-seek-client",
+	"name": "cube-hide-n-seek-server",
 	"version": "0.0.1",
 	"author" : "Michael Adam Lockwood & Jonno Allcock",
 	"description" : "cube game",
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:Padamieo/Cube_Hide_N_Seek.git"
+	},
+	"dependencies":{
+		"express": "^4.10.2",
+		"socket.io": "^1.3.5",
+		"three": "^0.71.0"
 	},
 	"devDependencies": {
 		"grunt": "~0.4.5",
@@ -16,7 +21,10 @@
 		"grunt-contrib-connect": "*",
 		"grunt-contrib-watch": "*",
 		"grunt-contrib-concat": "*",
-		"grunt-open": "*"
-		
+		"grunt-open": "*",
+		"nodewebkit": "*"
+	},
+	"scripts": {
+		"start": "nodewebkit build"
 	}
 }

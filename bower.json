@@ -1,0 +1,12 @@
+{
+	"name": "webgl-three-grunt-development",
+	"version": "0.0.1",
+	"dependencies": {
+		 "threejs": "*",
+		 "threestrap": "*"
+	},
+	"private": true,
+	"devDependencies": {
+
+	}
+}
