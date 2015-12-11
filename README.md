@@ -1,7 +1,7 @@
 Cube_Hide_N_Seek - server
 ================
 
-https://github.com/PiusNyakoojo/multiplayer_template -- goog example
+https://github.com/PiusNyakoojo/multiplayer_template -- good example
 http://blog.csainty.com/2012/01/running-nodejs-server-alongside-your.html - for when we close
 http://socket.io/
 

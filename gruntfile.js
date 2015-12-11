@@ -10,10 +10,31 @@ module.exports = function(grunt){
       mangle: true,
       beautify: false
     },
-    target:{
+    nodeapp:{
       files:{
         'build/app.min.js': [
-          'src/**/*.js'
+          'src/js/**.js'
+        ]
+      }
+    },
+    serve:{
+      files:{
+        'build/serve/app.js': [
+          'src/serve/app.js'
+        ]
+      }
+    },
+    client_world:{
+      files:{
+        'build/serve/js/client_world.js': [
+          'src/serve/js/client_world.js'
+        ]
+      }
+    },
+    server_world:{
+      files:{
+        'build/serve/js/server_world.js': [
+          'src/serve/js/server_world.js'
         ]
       }
     }
@@ -30,18 +51,45 @@ module.exports = function(grunt){
 	},
 	copy: {
 		build:{
-			files:[
-				{
+			files:[{
 				cwd: 'src/',
-				src: ['**', '!*/*.js', '!**/*.jpg', '!**/*.css'],
+				src: ['**', '!**/*.js', '!**/*.jpg', '!**/*.css'],
 				dest: 'build/',
 				nonull: false,
 				expand: true,
 				flatten: false,
 				filter: 'isFile',
-				},
-			]
-		}
+			},]
+		},
+    lib:{
+      files:[{
+				cwd: 'bower_components/',
+				src: [
+          'threejs/build/three.js',
+          'threejs/examples/js/renderers/Projector.js',
+        ],
+				dest: 'build/serve/js/lib/',
+				nonull: false,
+				expand: true,
+				flatten: true,
+				filter: 'isFile',
+			},]
+    },
+    node:{
+      files:[{
+				cwd: 'node_modules/',
+				src: [
+          'express/**',
+          'three/**',
+          'socket.io/**'
+        ],
+				dest: 'build/serve/node_modules/',
+				nonull: false,
+				expand: true,
+				flatten: false,
+				filter: 'isFile',
+			},]
+    },
 	},
     connect: {
       run: {
@@ -73,11 +121,11 @@ module.exports = function(grunt){
       },
       js:{
         files: ['src/**.js'],
-        tasks: ['uglify'],
+        tasks: ['uglify:nodeapp','uglify:serve','uglify:client_world','uglify:server_world'],
       },
       html:{
         files: ['src/**.html'],
-        tasks: ['copy'],
+        tasks: ['copy:build','copy:lib','copy:node'],
       }
     },
 		cssmin:{
@@ -115,14 +163,39 @@ module.exports = function(grunt){
 	//grunt.loadNpmTasks('grunt-browserify'); // not using this
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-connect');
+	grunt.loadNpmTasks('grunt-contrib-connect'); // not sure we need this
 	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-contrib-concat'); // not sure we need this
 	grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-browser-sync');
 
 	// our default task, others will come later
-	grunt.registerTask('default', ['uglify', 'cssmin', 'copy', 'open', 'browserSync', 'watch']);
-	grunt.registerTask('build', ['uglify', 'cssmin', 'copy']);
+	grunt.registerTask('default', [
+    'uglify:nodeapp',
+    'uglify:serve',
+    'uglify:client_world',
+    'uglify:server_world',
+    'cssmin',
+    'copy:build',
+    'copy:lib',
+    'copy:node',
+    'open',
+    'browserSync',
+    'watch'
+  ]);
+
+  grunt.registerTask('build', [
+    'uglify:nodeapp',
+    'uglify:serve',
+    'uglify:client_world',
+    'uglify:server_world',
+    'cssmin',
+    'copy:build',
+    'copy:lib',
+    'copy:node'
+  ]);
+
+  grunt.registerTask('do', ['copy:node']);
+
 };

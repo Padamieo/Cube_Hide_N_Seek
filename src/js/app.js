@@ -7,7 +7,7 @@ $( document ).ready(function() {
   function activate_server(){
 
     var exec = require('child_process').exec;
-    exec('node multiplayer_template-master/app.js ', function(error, stdout, stderr) {
+    exec('node serve/app.js ', function(error, stdout, stderr) {
         if (error !== null) {
           throw error;
         }
