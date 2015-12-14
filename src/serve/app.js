@@ -3,6 +3,40 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var world = require('./js/server_world');
 
+
+var os = require('os');
+
+function getAddress(idx) {
+  var addresses = [],
+  interfaces = os.networkInterfaces(),
+  name, ifaces, iface;
+
+  for (name in interfaces) {
+    if(interfaces.hasOwnProperty(name)){
+      ifaces = interfaces[name];
+      if(!/(loopback|vmware|internal)/gi.test(name)){
+        for (var i = 0; i < ifaces.length; i++) {
+          iface = ifaces[i];
+          if (iface.family === 'IPv4' &&  !iface.internal && iface.address !== '127.0.0.1') {
+            addresses.push(iface.address);
+          }
+        }
+      }
+    }
+  }
+
+  // if an index is passed only return it.
+  if(idx >= 0)
+    return addresses[idx];
+  return addresses;
+}
+
+//this is a mess what happens when we have many ip's in an array
+var ip_array = getAddress();
+console.log( ip_array );
+var ip = ip_array[0];
+console.log( ip );
+
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
@@ -40,11 +74,12 @@ io.on('connection', function(socket){
 });
 
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+var ip_address = process.env.OPENSHIFT_NODEJS_IP || ip;
 
 http.listen(port, ip_address, function(){
-    console.log( "Listening on " + ip_address + ", server_port " + port );
+  console.log( "Listening on " + ip_address + ", server_port " + port );
 });
+
 
 /*
 http.listen(3000, function(){

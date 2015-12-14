@@ -120,7 +120,7 @@ module.exports = function(grunt){
         tasks: ['cssmin'],
       },
       js:{
-        files: ['src/**.js'],
+        files: ['src/**.js', 'src/**/**.js'],
         tasks: ['uglify:nodeapp','uglify:serve','uglify:client_world','uglify:server_world'],
       },
       html:{

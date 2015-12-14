@@ -57,6 +57,7 @@ var loadWorld = function(){
         requestAnimationFrame( animate );
         render();
     }
+
     function render(){
 
         if ( player ){
