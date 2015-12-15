@@ -27,6 +27,9 @@ module.exports = function(grunt){
     client_world:{
       files:{
         'build/serve/js/client_world.js': [
+          'node_modules/socket.io/node_modules/socket.io-client/socket.io.js',
+          'bower_components/threejs/build/three.js',
+          'bower_components/threestrap/build/threestrap.js',
           'src/serve/js/client_world.js'
         ]
       }
