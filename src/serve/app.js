@@ -2,8 +2,6 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var world = require('./js/server_world');
-
-
 var os = require('os');
 
 function getAddress(idx) {
@@ -24,7 +22,6 @@ function getAddress(idx) {
       }
     }
   }
-
   // if an index is passed only return it.
   if(idx >= 0)
     return addresses[idx];
@@ -73,16 +70,14 @@ io.on('connection', function(socket){
 
 });
 
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8888;
 var ip_address = process.env.OPENSHIFT_NODEJS_IP || ip;
 
-http.listen(port, ip_address, function(){
-  console.log( "Listening on " + ip_address + ", server_port " + port );
-});
+// http.listen(port, ip_address, function(){
+//   console.log( "Listening on " + ip_address + ", server_port " + port );
+// });
 
 
-/*
-http.listen(3000, function(){
+http.listen(port, function(){
    console.log('listening on *: 3000');
 });
-*/
