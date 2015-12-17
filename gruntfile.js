@@ -8,7 +8,7 @@ module.exports = function(grunt){
     options:{
       banner: '/*<%= pkg.name %> V<%= pkg.version %> made on <%= grunt.template.today("yyyy-mm-dd") %>*/\r',
       mangle: true,
-      beautify: false
+      beautify: true
     },
     nodeapp:{
       files:{

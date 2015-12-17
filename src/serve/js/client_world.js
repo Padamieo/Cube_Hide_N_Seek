@@ -8,7 +8,7 @@ var playerData;
 
 var otherPlayers = [], otherPlayersId = [];
 
-//var three = THREE.Bootstrap();
+var three = THREE.Bootstrap();
 
 var loadWorld = function(){
 
@@ -17,7 +17,7 @@ var loadWorld = function(){
 
     //function init(){
 
-      var three = THREE.Bootstrap();
+      //var three = THREE.Bootstrap();
 
       // Insert a cube
       // var mesh = new THREE.Mesh(new THREE.CubeGeometry(.5, .5, .5), new THREE.MeshNormalMaterial());
@@ -42,19 +42,20 @@ var loadWorld = function(){
       document.addEventListener('keyup', onKeyUp, false );
       window.addEventListener( 'resize', onWindowResize, false );
 
+      three.camera.position.set(1, 1, 0.5);
+
       three.on('update', function () {
         // var t = three.Time.now;
         //
         //
-        three.camera.position.set(1, 1, 0.5);
+        //three.camera.position.set(1, 1, 0.5);
         // //mesh.rotation.set(Math.sin(t), Math.cos(t), Math.tan(t));
         // three.camera.lookAt(new THREE.Vector3());
+
         if ( player ){
-          //updateCameraPosition();
+          updateCameraPosition();
           checkKeyStates();
           three.camera.lookAt( player.position );
-        }else{
-          three.camera.lookAt(new THREE.Vector3());
         }
 
       });
@@ -142,15 +143,16 @@ var loadWorld = function(){
     // }
 
     function onMouseClick(){
-        intersects = calculateIntersects( event );
+      intersects = calculateIntersects( event );
 
-        if ( intersects.length > 0 ){
-            //If object is intersected by mouse pointer, do something
-            if (intersects[0].object == sphere){
-                alert("This is a sphere!");
-            }
-        }
+      if ( intersects.length > 0 ){
+        //If object is intersected by mouse pointer, do something
+        // if (intersects[0].object == sphere){
+        //     alert("This is a sphere!");
+        // }
+      }
     }
+
     function onMouseDown(){
     }
 
@@ -175,9 +177,9 @@ var loadWorld = function(){
     }
 
     function onWindowResize() {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize( window.innerWidth, window.innerHeight );
+      three.camera.aspect = window.innerWidth / window.innerHeight;
+      three.camera.updateProjectionMatrix();
+      three.renderer.setSize( window.innerWidth, window.innerHeight );
     }
 
     function calculateIntersects( event ){
@@ -207,7 +209,7 @@ function create_cube(data){
 
   //this needs to be array to hold all cube_geometry or we end up with one cube with material
   cube_geometry = new THREE.BoxGeometry(sizeX, sizeY, sizeZ);
-  cube_material = new THREE.MeshLambertMaterial({color: 0x7777ff});
+  cube_material = new THREE.MeshLambertMaterial({color: 0x7f1d1d});
 
   return new THREE.Mesh(cube_geometry, cube_material);
 }
@@ -245,14 +247,14 @@ var createPlayer = function(data){
     turnSpeed = data.turnSpeed;
     updateCameraPosition();
     objects.push( player );
-    scene.add( player );
-    camera.lookAt( player.position );
+    three.scene.add( player );
+    three.camera.lookAt( player.position );
 };
 
 var updateCameraPosition = function(){
-  camera.position.x = player.position.x + 6 * Math.sin( player.rotation.y );
-  camera.position.y = player.position.y + 6;
-  camera.position.z = player.position.z + 6 * Math.cos( player.rotation.y );
+  three.camera.position.x = player.position.x + 6 * Math.sin( player.rotation.y );
+  three.camera.position.y = player.position.y + 6;
+  three.camera.position.z = player.position.z + 6 * Math.cos( player.rotation.y );
 };
 
 var updatePlayerPosition = function(data){
@@ -328,21 +330,21 @@ var checkKeyStates = function(){
 
 var addOtherPlayer = function(data){
 
-  // otherPlayer = create_cube(data);
-  //
-  // cube_geometry3 = new THREE.BoxGeometry(data.sizeX, data.sizeX, data.sizeX);
-  // cube_material3 = new THREE.MeshLambertMaterial({color: 0x7777ff});
-  // otherPlayer = new THREE.Mesh(cube_geometry3, cube_material3);
-  //
-  // otherPlayersId.push( data.playerId );
-  // otherPlayers.push( otherPlayer );
-  // objects.push( otherPlayer );
-  // scene.add( otherPlayer );
+  //otherPlayer = create_cube(data);
+
+  cube_geometry3 = new THREE.BoxGeometry(data.sizeX, data.sizeX, data.sizeX);
+  cube_material3 = new THREE.MeshLambertMaterial({color: 0x7777ff});
+  otherPlayer = new THREE.Mesh(cube_geometry3, cube_material3);
+
+  otherPlayersId.push( data.playerId );
+  otherPlayers.push( otherPlayer );
+  objects.push( otherPlayer );
+  three.scene.add( otherPlayer );
 
 };
 
 var removeOtherPlayer = function(data){
-  scene.remove( playerForId(data.playerId) );
+  three.scene.remove( playerForId(data.playerId) );
 };
 
 var playerForId = function(id){
