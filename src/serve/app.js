@@ -55,7 +55,7 @@ io.on('connection', function(socket){
     socket.on('requestOldPlayers', function(){
         for (var i = 0; i < world.players.length; i++){
             if (world.players[i].playerId != id)
-                socket.emit('addOtherPlayer', world.players[i]);
+              socket.emit('addOtherPlayer', world.players[i]);
         }
     });
     socket.on('updatePosition', function(data){

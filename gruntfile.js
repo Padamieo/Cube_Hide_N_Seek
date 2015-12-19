@@ -64,20 +64,6 @@ module.exports = function(grunt){
 				filter: 'isFile',
 			},]
 		},
-    lib:{
-      files:[{
-				cwd: 'bower_components/',
-				src: [
-          'threejs/build/three.js',
-          'threejs/examples/js/renderers/Projector.js',
-        ],
-				dest: 'build/serve/js/lib/',
-				nonull: false,
-				expand: true,
-				flatten: true,
-				filter: 'isFile',
-			},]
-    },
     node:{
       files:[{
 				cwd: 'node_modules/',
@@ -128,7 +114,7 @@ module.exports = function(grunt){
       },
       html:{
         files: ['src/**.html'],
-        tasks: ['copy:build','copy:lib','copy:node'],
+        tasks: ['copy:build','copy:node'],
       }
     },
 		cssmin:{
@@ -181,7 +167,6 @@ module.exports = function(grunt){
     'uglify:server_world',
     'cssmin',
     'copy:build',
-    'copy:lib',
     'copy:node',
     'open',
     'browserSync',
@@ -195,7 +180,6 @@ module.exports = function(grunt){
     'uglify:server_world',
     'cssmin',
     'copy:build',
-    'copy:lib',
     'copy:node'
   ]);
 
