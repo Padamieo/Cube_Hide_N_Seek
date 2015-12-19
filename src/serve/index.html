@@ -17,29 +17,5 @@
 
 <div id="container"></div>
 <script src="/js/client_world.js"></script>
-<script>
-
-    var socket = io();
-
-    socket.on('updatePosition', function(data){
-      updatePlayerPosition(data);
-    });
-    socket.on('connect', function(){
-      loadWorld();
-      console.log("connect");
-      socket.emit('requestOldPlayers', {});
-    });
-    socket.on('createPlayer', function(data){
-      console.log("createPlayer");
-      createPlayer(data);
-    });
-    socket.on('addOtherPlayer', function(data){
-      addOtherPlayer(data);
-    });
-    socket.on('removeOtherPlayer', function(data){
-      removeOtherPlayer(data);
-    });
-
-</script>
 </body>
 </html>
