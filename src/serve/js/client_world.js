@@ -1,3 +1,4 @@
+//TODO
 var container, scene, camera, renderer, raycaster, objects = [], directionalLight;
 var keyState = {};
 var sphere;
