@@ -7,7 +7,7 @@ module.exports = function(grunt){
   uglify:{
     options:{
       banner: '/*<%= pkg.name %> V<%= pkg.version %> made on <%= grunt.template.today("yyyy-mm-dd") %>*/\r',
-      mangle: true,
+      mangle: false,
       beautify: true
     },
     nodeapp:{
@@ -19,26 +19,27 @@ module.exports = function(grunt){
     },
     serve:{
       files:{
-        'build/serve/app.js': [
-          'src/serve/app.js'
+        'build/app.js': [
+          'src/app.js'
         ]
       }
     },
     client_world:{
       files:{
-        'build/serve/js/client_world.js': [
-          'node_modules/socket.io/node_modules/socket.io-client/socket.io.js',
+        'build/js/client_world.js': [
+          //'node_modules/socket.io/socket.io.js',
+          //'node_modules/socket.io-client/socket.io.js',
           'bower_components/threejs/build/three.js',
           'bower_components/threestrap/build/threestrap.js',
-          'src/serve/js/client_world.js',
-          'src/serve/js/socket_start.js'
+          'src/js/client_world.js',
+          'src/js/socket_start.js'
         ]
       }
     },
     server_world:{
       files:{
-        'build/serve/js/server_world.js': [
-          'src/serve/js/server_world.js'
+        'build/js/server_world.js': [
+          'src/js/server_world.js'
         ]
       }
     }
@@ -103,8 +104,9 @@ module.exports = function(grunt){
     },
     watch:{
       options: {
-        livereload: true,
-      },
+			  livereload: 1337,
+        spawn: false
+			},
       css:{
         files: ['src/**.css', 'src/css/**.css'],
         tasks: ['cssmin'],

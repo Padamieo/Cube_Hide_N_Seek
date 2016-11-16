@@ -1,25 +1,51 @@
 <!DOCTYPE html>
 <html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>A Cube Game</title>
+    <!-- <script src="../node_modules/socket.io/socket.io.js"></script> -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 
-<head>
-  <meta charset="UTF-8">
-  <title>I AM A TITLE</title>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script><!-- please can we remove this? -->
-  <script src="app.min.js"></script>
-  <link rel="stylesheet" href="css/style.css">
+
+
+    <style>
+        body {
+          margin: 0px;
+          overflow: hidden;
+          background: #555;
+        }
+    </style>
 </head>
-
 <body>
-  <div class="v-wrap">
-    <div class="content v-box">
-    	<h1>Qyouba</h1>
-      <h2>Server Setup</h2>
-      <input id="start_server" type="submit" value="Start Host" title="Start Host"/>
-      <input id="stop_server" type="submit" value="Stop" title="Stop"/>
-      <script src="//localhost:35729/livereload.js"></script>
-      <p>Instructions</p>
-    </div>
-  </div>
-</body>
 
+<div id="container"></div>
+<script src="/js/client_world.js"></script>
+<script>
+
+    //var socket = io();
+    var socket = io('http://localhost');
+    //var socket = require('socket.io');
+
+
+    socket.on('connect', function(){
+      console.log("test");
+      // loadWorld();
+      // socket.emit('requestOldPlayers', {});
+    });
+    // socket.on('updatePosition', function(data){
+    //     updatePlayerPosition(data);
+    // });
+    // socket.on('createPlayer', function(data){
+    //   createPlayer(data);
+    // });
+    // socket.on('addOtherPlayer', function(data){
+    //     addOtherPlayer(data);
+    // });
+    // socket.on('removeOtherPlayer', function(data){
+    //     removeOtherPlayer(data);
+    // });
+
+</script>
+</body>
 </html>
